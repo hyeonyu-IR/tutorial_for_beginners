@@ -1,0 +1,27 @@
+# Example configuration for python/run_analysis.py
+data: data/analysis_dataset.csv
+
+outcome: complication          # binary 0/1
+time: time_to_event            # duration for Cox
+status: event                  # 0/1 event indicator
+
+covars: [age, sex, group, bmi]
+
+group: group                   # for KM stratification
+ref_group: control             # reference level when present
+
+# Optional clustering variable for robust SE in logistic
+cluster: null                  # e.g., patient_id or site
+
+outputs:
+  or_table_csv: outputs/logistic_or_table.csv
+  hr_table_csv: outputs/cox_hr_table.csv
+  km_plot: outputs/km_plot.png
+  report_html: outputs/report.html
+
+report:
+  title: Project Analysis Report
+  author: Hyeon Yu, MD
+  institution: University of North Carolina
+  include_tables: true
+  include_km_plot: true
