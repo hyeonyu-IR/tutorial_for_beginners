@@ -1,0 +1,60 @@
+
+---
+title: "Clinical Analysis Report"
+author: "Hyeon Yu, MD"
+format:
+  html: default
+  pdf: default
+params:
+  analysis: "logistic"   # "logistic" or "cox"
+  data_path: "data/analysis_dataset.csv"
+  outcome: "outcome"      # binary for logistic
+  time: "time"            # for Cox
+  status: "status"        # 0/1 for Cox
+  covariates: ["age","sex","group","bmi"]
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse); library(janitor); library(broom); library(gtsummary)
+library(survival); library(survminer)
+
+# Read data
+DF <- readr::read_csv(params$data_path) %>% janitor::clean_names()
+
+# Build formula based on params
+covars <- params$covariates
+
+if (params$analysis == "logistic") {
+  fml <- as.formula(paste(params$outcome, "~", paste(covars, collapse = "+")))
+  fit <- glm(fml, data = DF, family = binomial)
+  cat("## Logistic regression
+
+")
+  print(broom::tidy(fit, exponentiate=TRUE, conf.int=TRUE))
+  print(tbl_regression(fit, exponentiate=TRUE) %>% bold_p(t=0.05))
+} else if (params$analysis == "cox") {
+  s <- Surv(time = DF[[params$time]], event = DF[[params$status]])
+  fml <- as.formula(paste("s ~", paste(covars, collapse = "+")))
+  fit <- coxph(fml, data = DF)
+  cat("## Cox proportional hazards
+
+")
+  print(broom::tidy(fit, exponentiate=TRUE, conf.int=TRUE))
+  print(tbl_regression(fit, exponentiate=TRUE) %>% bold_p(t=0.05))
+
+  # Kaplan–Meier by first covariate if categorical
+  grp <- covars[1]
+  if (is.factor(DF[[grp]]) || is.character(DF[[grp]])) {
+    km <- survfit(Surv(DF[[params$time]], DF[[params$status]]) ~ DF[[grp]])
+    print(ggsurvplot(km, data=DF, risk.table=TRUE, pval=TRUE, conf.int=TRUE))
+  }
+}
+```
+
+# Notes
+- Set `params.analysis` to `"logistic"` or `"cox"`.
+- Set `params.data_path`, outcome/time/status names, and `params.covariates`.

@@ -1,0 +1,29 @@
+# R / RStudio
+.Rhistory
+.Rproj.user/
+.RData
+.Ruserdata
+.Rproj.user
+.Rproj.user/*
+*.Rproj
+
+# Python (if any)
+__pycache__/
+*.py[cod]
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data / outputs
+data/raw/
+outputs/
+*.html
+*.pdf
+
+# Quarto/Rmd caches
+_cache/
+*_cache/
+
+# Virtual envs
+.venv/

@@ -1,0 +1,39 @@
+
+---
+title: "Clinical Analysis Report (Rmd)"
+author: "Hyeon Yu, MD"
+output:
+  html_document: default
+  pdf_document: default
+params:
+  analysis: "logistic"   # or "cox"
+  data_path: "data/analysis_dataset.csv"
+  outcome: "outcome"
+  time: "time"
+  status: "status"
+  covariates: ["age","sex","group","bmi"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse); library(janitor); library(broom); library(gtsummary)
+library(survival); library(survminer)
+DF <- readr::read_csv(params$data_path) %>% janitor::clean_names()
+
+covars <- params$covariates
+if (params$analysis == "logistic") {
+  fml <- as.formula(paste(params$outcome, "~", paste(covars, collapse = "+")))
+  fit <- glm(fml, data = DF, family = binomial)
+  broom::tidy(fit, exponentiate=TRUE, conf.int=TRUE)
+  tbl_regression(fit, exponentiate=TRUE) %>% bold_p(t=0.05)
+} else {
+  s <- Surv(DF[[params$time]], DF[[params$status]])
+  fml <- as.formula(paste("s ~", paste(covars, collapse = "+")))
+  fit <- coxph(fml, data = DF)
+  broom::tidy(fit, exponentiate=TRUE, conf.int=TRUE)
+  tbl_regression(fit, exponentiate=TRUE) %>% bold_p(t=0.05)
+}
+```
