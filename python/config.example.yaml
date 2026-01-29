@@ -1,23 +1,28 @@
-# Example configuration for python/run_analysis.py
+# Example configuration for python/run_analysis.py (V2)
 data: data/analysis_dataset.csv
 
-outcome: complication          # binary 0/1
-time: time_to_event            # duration for Cox
-status: event                  # 0/1 event indicator
+outcome: complication      # 0/1
+time: time_to_event        # numeric duration
+status: event              # 0/1
 
 covars: [age, sex, group, bmi]
+group: group               # for KM stratification
+ref_group: control
+cluster: null              # optional clustering variable for robust SE in logistic
 
-group: group                   # for KM stratification
-ref_group: control             # reference level when present
-
-# Optional clustering variable for robust SE in logistic
-cluster: null                  # e.g., patient_id or site
+imputation:
+  method: simple           # none | simple | iterative
+  iterative_max_iter: 10
 
 outputs:
   or_table_csv: outputs/logistic_or_table.csv
   hr_table_csv: outputs/cox_hr_table.csv
+  ph_table_csv: outputs/cox_ph_test.csv
   km_plot: outputs/km_plot.png
+  roc_plot: outputs/roc_curve.png
+  calibration_plot: outputs/calibration_plot.png
   report_html: outputs/report.html
+  report_docx: outputs/report.docx
 
 report:
   title: Project Analysis Report
@@ -25,3 +30,4 @@ report:
   institution: University of North Carolina
   include_tables: true
   include_km_plot: true
+  include_docx: true

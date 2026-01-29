@@ -4,14 +4,14 @@ import pandas as pd
 import numpy as np
 import re
 
-__all__ = ['read_clean', 'clean_columns', 'set_categorical_ref']
+__all__ = ["read_clean", "clean_columns", "set_categorical_ref"]
 
 def clean_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Lowercase, snake_case, strip spaces/punctuation, collapse repeats."""
     def _clean(col: str) -> str:
         s = col.strip().lower()
-        s = re.sub(r'[^0-9a-zA-Z]+', '_', s)
-        s = re.sub(r'_+', '_', s).strip('_')
+        s = re.sub(r"[^0-9a-zA-Z]+", "_", s)
+        s = re.sub(r"_+", "_", s).strip("_")
         return s
     df = df.copy()
     df.columns = [_clean(c) for c in df.columns]
@@ -20,13 +20,13 @@ def clean_columns(df: pd.DataFrame) -> pd.DataFrame:
 def read_clean(path: str, sheet: int | str | None = None) -> pd.DataFrame:
     """Read CSV/TSV/Excel and standardize columns."""
     low = path.lower()
-    if low.endswith(('.csv', '.tsv', '.txt')):
-        sep = ',' if low.endswith('.csv') else '\t'
+    if low.endswith((".csv", ".tsv", ".txt")):
+        sep = "," if low.endswith(".csv") else "\t"
         df = pd.read_csv(path, sep=sep)
-    elif low.endswith('.xlsx'):
+    elif low.endswith(".xlsx"):
         df = pd.read_excel(path, sheet_name=sheet)
     else:
-        raise ValueError(f'Unsupported file extension: {path}')
+        raise ValueError(f"Unsupported file extension: {path}")
     return clean_columns(df)
 
 def set_categorical_ref(df: pd.DataFrame, col: str, ref: str) -> pd.DataFrame:
