@@ -28,3 +28,35 @@ python python/run_analysis.py --config config.yaml
 - Tables: `outputs/logistic_or_table.csv`, `outputs/cox_hr_table.csv`, `outputs/cox_ph_test.csv`
 - Figures: `outputs/km_plot.png`, `outputs/roc_curve.png`, `outputs/calibration_plot.png`
 - Report: `outputs/report.html` and (optional) `outputs/report.docx`
+
+
+## 5) Quick start
+### 1. Create environment
+```
+conda create -n research_py3.11 python=3.11 -y
+conda activate research_py3.11
+pip install -r python/requirements.txt
+```
+
+### 2. Configure
+```
+cp python/config.example.yaml config.yaml
+# edit config.yaml for your dataset and variables
+```
+
+### 3. Run
+```
+python python/run_analysis.py --config config.yaml
+```
+
+### 4. Outputs
+- Tables:
+    - outputs/logistic_or_table.csv
+    - outputs/cox_hr_table.csv
+    - outputs/cox_ph_test.csv
+- Figures:
+    - outputs/km_plot.png
+    - outputs/roc_curve.png
+    - outputs/calibration_plot.png
+- Reports:
+    - outputs/report.html (+ outputs/report.docx if enabled)
