@@ -1,6 +1,16 @@
 
 # run_analysis.R — minimal end-to-end driver script
 
+isntall.packages <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg)) 
+    install.packages(new.pkg, dependencies = TRUE)
+}
+
+required.packages <- c("tidyverse", "janitor", "survival", "survminer", "broom")
+isntall.packages(required.packages)
+
+
 suppressPackageStartupMessages({
   library(tidyverse); library(janitor)
 })
@@ -18,7 +28,11 @@ COVARS     <- c("age","sex","group","bmi")
 GROUP      <- "group"
 # --------------------------------
 
+# Load and clean data
 DF <- read_clean(DATA_PATH)
+
+# View summary
+print(glimpse(DF))
 
 # Logistic (multivariable)
 fit_log <- run_logistic(DF, OUTCOME, COVARS)

@@ -1,0 +1,6 @@
+numpy>=1.23
+pandas>=1.5
+matplotlib>=3.6
+pydicom>=2.3
+nibabel>=5.0
+scikit-image>=0.20
