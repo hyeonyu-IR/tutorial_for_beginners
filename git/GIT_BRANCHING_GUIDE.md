@@ -1,6 +1,6 @@
-# Main vs Branches in Git: A Practical Guide for Your Tutorial Repo
+# Main vs Branches in Git: A Practical Guide
 
-**Author:** Hyeon Yu (Clinical Professor of Radiology, IR)  
+**Author:** Hyeon Yu, MD  
 **Use case:** Solo or small‑team academic workflows across **Home** and **UNC workstation** clones.
 
 ---
