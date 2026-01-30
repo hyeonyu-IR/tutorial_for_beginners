@@ -1,0 +1,13 @@
+Paired t-test Results:
+
+	Paired t-test
+
+data:  pre and post
+t = 7.4556, df = 39, p-value = 5.117e-09
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 0.1573771 0.2745609
+sample estimates:
+mean difference 
+       0.215969 
+

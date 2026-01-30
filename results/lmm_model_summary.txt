@@ -1,0 +1,28 @@
+Linear mixed model fit by REML ['lmerMod']
+Formula: y ~ visit + age + (1 | subject)
+   Data: df
+
+REML criterion at convergence: 1027.5
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.0990 -0.5469  0.0124  0.6024  2.1839 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ subject  (Intercept) 20.619   4.541   
+ Residual              8.979   2.997   
+Number of obs: 180, groups:  subject, 60
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) 50.97750    4.30174  11.850
+visit2      -0.35252    0.54709  -0.644
+visit3      -0.38372    0.54709  -0.701
+age          0.18267    0.06869   2.659
+
+Correlation of Fixed Effects:
+       (Intr) visit2 visit3
+visit2 -0.064              
+visit3 -0.064  0.500       
+age    -0.987  0.000  0.000

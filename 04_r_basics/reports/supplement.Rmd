@@ -1,0 +1,15 @@
+---
+title: "Supplemental Material"
+author: "Hyeon Yu, MD"
+date: "`r format(Sys.Date())`"
+output:
+  html_document:
+    toc: true
+    theme: cosmo
+---
+
+## Additional Tables and Figures
+
+- Add sensitivity analyses
+- Add extended cohort characteristics
+- Add alternative model specifications

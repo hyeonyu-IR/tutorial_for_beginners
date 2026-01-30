@@ -159,7 +159,7 @@ It *is*:
 ## Maintainer
 
 **Hyeon Yu, MD**  
-Clinical Professor of Radiology
+Clinical Professor of Radiology,
 Vascular and Interventional Radiology  
 University of North Carolina at Chapel Hill  
 

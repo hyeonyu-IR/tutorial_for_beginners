@@ -1,0 +1,67 @@
+# Cox proportional hazards model + PH check
+set.seed(42)
+N <- 140
+age <- rnorm(N, 64, 9)
+sarc <- rbinom(N, 1, 0.3)
+group <- factor(sample(c('TACE','TARE'), N, TRUE))
+linpred <- 0.02*(age-60) + 0.6*sarc + 0.1*(group=='TACE')
+rate <- 0.04 * exp(linpred)
+T <- rexp(N, rate=rate)
+status <- rbinom(N, 1, 0.75)
+
+df <- data.frame(time=T, status=status, age=age, sarc=factor(sarc), group=group)
+
+suppressPackageStartupMessages(library(survival))
+fit <- coxph(Surv(time, status) ~ age + sarc + group, data=df)
+summary(fit)
+
+# PH assumption check
+cox.zph(fit)
+plot(cox.zph(fit))
+
+# Visualizations using survminer
+suppressPackageStartupMessages(library(survminer))
+# ggcoxzph(cox.zph(fit), var="age")
+# ggcoxzph(cox.zph(fit))
+
+# Functional form check: various options
+# ggcoxfunctional(fit)
+# ggcoxdiagnostics(fit, type="deviance")
+# ggcoxdiagnostics(fit, type="dfbeta")
+# ggcoxdiagnostics(fit, type="schoenfeld")
+# ggcoxdiagnostics(fit, type="martingale")
+# ggcoxdiagnostics(fit, type="partial")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group)
+# ggcoxfunctional(fit, data=df, formula = ~ age)
+# ggcoxfunctional(fit, data=df, formula = ~ sarc)
+# ggcoxfunctional(fit, data=df, formula = ~ group)
+# ggcoxfunctional(fit, data=df, formula = ~ group + sarc)
+# ggcoxfunctional(fit, data=df, formula = ~ age + group)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group)
+# ggcoxfunctional(fit, data=df, formula = ~ age * sarc)
+# ggcoxfunctional(fit, data=df, formula = ~ age * group)
+# ggcoxfunctional(fit, data=df, formula = ~ sarc * group)
+# ggcoxfunctional(fit, data=df, formula = ~ age + I(age^2) + sarc + group)
+# ggcoxfunctional(fit, data=df, formula = ~ ns(age, df=3) + sarc + group)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, point.col="blue", line.col="red")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, point.size=1.5, line.size=1)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, rug=TRUE)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, conf.int=0.95)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, span=0.5)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, npoints=100)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, facet=TRUE)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, facet.ncol=2)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, title="Cox PH Functional Form Check")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, xlab="Covariate Value", ylab="Transformed Martingale Residuals")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, legend.title="Covariates")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, legend.position="topright")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, conf.int.fill="lightblue")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, point.alpha=0.7)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, line.type="dashed")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, conf.int.linetype="dotted")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, grid.col="gray")
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, theme.bw=TRUE)
+# ggcoxfunctional(fit, data=df, formula = ~ age + sarc + group, theme.minimal=TRUE)
+
+# End of file
