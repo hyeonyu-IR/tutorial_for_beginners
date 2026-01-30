@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tutorial_for_beginners-python-basics"
+version = "0.1.0"
+description = "Radiology-first Python module: imaging pipeline & reproducible envs"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.23",
+  "pandas>=1.5",
+  "matplotlib>=3.6",
+  "pydicom>=2.3",
+  "nibabel>=5.0",
+  "scikit-image>=0.20",
+  "SimpleITK>=2.2",
+]
+
+[project.optional-dependencies]
+devel = ["ipython", "ipywidgets", "jupyter"]
+
+[tool.setuptools]
+packages = []
