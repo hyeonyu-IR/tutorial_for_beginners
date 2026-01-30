@@ -1,5 +1,12 @@
 
-# Git: From Zero to Confident Collaboration (with GitHub)
+# Advanced Git Reference (Optional)
+
+This document is an **optional reference** for users who are already comfortable
+with the core workflows taught in this repository.
+
+❗ Beginners: Start with
+- 00_orientation/how_this_repo_works.md
+- 01_git_basics/essential_commands.md
 
 > A concise, practical reference for daily use.
 
